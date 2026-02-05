@@ -22,7 +22,7 @@ public class BestiolePanel extends JPanel {
 
     myModel = model;
     myFont = new Font("Monospaced", Font.BOLD, FONT_SIZE + 4);
-    setBackground(Color.WHITE);
+    setBackground(Color.BLACK);
     setPreferredSize(
         new Dimension(FONT_SIZE * model.getWidth() + 20, FONT_SIZE * model.getHeight() + 20));
   }
