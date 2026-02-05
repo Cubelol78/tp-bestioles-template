@@ -45,7 +45,10 @@ public class BestioleFrame extends JFrame {
   // Construit l'UI du panel du bas
   private void constructSouth() {
     JPanel p = new JPanel();
+    p.setBackground(new Color(245, 245, 245));
+    p.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+    // Slider de vitesse
     final JSlider slider = new JSlider();
     slider.addChangeListener(new ChangeListener() {
       public void stateChanged(ChangeEvent e) {
@@ -53,27 +56,38 @@ public class BestioleFrame extends JFrame {
         myTimer.setDelay((int) (ratio - 180));
       }
     });
-
     slider.setValue(20);
-    p.add(new JLabel("lent"));
-    p.add(slider);
-    p.add(new JLabel("rapide"));
+    slider.setBackground(new Color(245, 245, 245));
 
-    JButton b1 = new JButton("go");
+    JLabel labelLent = new JLabel("Lent");
+    labelLent.setFont(new Font("Arial", Font.PLAIN, 12));
+    p.add(labelLent);
+    p.add(slider);
+    JLabel labelRapide = new JLabel("Rapide");
+    labelRapide.setFont(new Font("Arial", Font.PLAIN, 12));
+    p.add(labelRapide);
+
+    // Séparateur
+    p.add(Box.createHorizontalStrut(15));
+
+    // Boutons de contrôle
+    JButton b1 = createStyledButton("▶ Démarrer", new Color(76, 175, 80));
     b1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         myTimer.start();
       }
     });
     p.add(b1);
-    JButton b2 = new JButton("stop");
+
+    JButton b2 = createStyledButton("⏸ Stop", new Color(244, 67, 54));
     b2.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         myTimer.stop();
       }
     });
     p.add(b2);
-    JButton b3 = new JButton("step");
+
+    JButton b3 = createStyledButton("➜ Step", new Color(33, 150, 243));
     b3.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         doOneStep();
@@ -81,7 +95,7 @@ public class BestioleFrame extends JFrame {
     });
     p.add(b3);
 
-    JButton b4 = new JButton("debug");
+    JButton b4 = createStyledButton("🔍 Debug", new Color(156, 39, 176));
     b4.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         myModel.toggleDebug();
@@ -90,7 +104,7 @@ public class BestioleFrame extends JFrame {
     });
     p.add(b4);
 
-    JButton b5 = new JButton("+100 steps");
+    JButton b5 = createStyledButton("+100 steps", new Color(255, 152, 0));
     b5.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         multistep(100);
@@ -99,6 +113,19 @@ public class BestioleFrame extends JFrame {
     p.add(b5);
 
     add(p, BorderLayout.SOUTH);
+  }
+
+  // Crée un bouton avec un style moderne
+  private JButton createStyledButton(String text, Color color) {
+    JButton button = new JButton(text);
+    button.setFont(new Font("Arial", Font.BOLD, 12));
+    button.setBackground(color);
+    button.setForeground(Color.WHITE);
+    button.setFocusPainted(false);
+    button.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+    button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    button.setOpaque(true);
+    return button;
   }
 
   // Démarre la simulation (les bestioles doivent déjà avoir été ajoutées)
@@ -121,15 +148,34 @@ public class BestioleFrame extends JFrame {
   // L'UI de la colonne de droite (nombre de bestioles en vie)
   private void addClassCounts() {
     Set<Map.Entry<String, Integer>> entries = myModel.getCounts();
-    JPanel p = new JPanel(new GridLayout(entries.size() + 1, 1));
+    JPanel p = new JPanel(new GridLayout(entries.size() + 1, 1, 5, 5));
+    p.setBackground(new Color(245, 245, 245));
+    p.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
     counts = new JButton[entries.size()];
     for (int i = 0; i < counts.length; i++) {
       counts[i] = new JButton();
+      counts[i].setFont(new Font("Monospaced", Font.BOLD, 14));
+      counts[i].setFocusPainted(false);
+      counts[i].setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+        BorderFactory.createEmptyBorder(8, 12, 8, 12)
+      ));
+      counts[i].setBackground(Color.WHITE);
+      counts[i].setHorizontalAlignment(SwingConstants.LEFT);
       p.add(counts[i]);
     }
 
     countButton = new JButton();
-    countButton.setForeground(Color.BLUE);
+    countButton.setFont(new Font("Monospaced", Font.BOLD, 14));
+    countButton.setForeground(new Color(33, 150, 243));
+    countButton.setBackground(new Color(227, 242, 253));
+    countButton.setFocusPainted(false);
+    countButton.setBorder(BorderFactory.createCompoundBorder(
+      BorderFactory.createLineBorder(new Color(100, 181, 246), 2),
+      BorderFactory.createEmptyBorder(8, 12, 8, 12)
+    ));
+    countButton.setHorizontalAlignment(SwingConstants.CENTER);
     p.add(countButton);
 
     add(p, BorderLayout.EAST);
@@ -141,17 +187,22 @@ public class BestioleFrame extends JFrame {
     int max = 0;
     int maxI = 0;
     for (Map.Entry<String, Integer> entry : myModel.getCounts()) {
-      String s = String.format("%s =%4d", entry.getKey(), (int) entry.getValue());
+      String s = String.format("%-12s %4d", entry.getKey(), (int) entry.getValue());
       counts[i].setText(s);
-      counts[i].setForeground(Color.BLACK);
+      counts[i].setForeground(new Color(60, 60, 60));
+      counts[i].setBackground(Color.WHITE);
       if (entry.getValue() > max) {
         max = entry.getValue();
         maxI = i;
       }
       i++;
     }
-    counts[maxI].setForeground(Color.RED);
-    String s = String.format("step =%5d", myModel.getSimulationCount());
+    // Met en évidence l'espèce dominante
+    counts[maxI].setForeground(new Color(76, 175, 80));
+    counts[maxI].setBackground(new Color(232, 245, 233));
+    counts[maxI].setFont(new Font("Monospaced", Font.BOLD, 15));
+
+    String s = String.format("Step : %d", myModel.getSimulationCount());
     countButton.setText(s);
   }
 
