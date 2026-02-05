@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch BestiolesApp",
+            "request": "launch",
+            "mainClass": "fr.pgah.BestiolesApp",
+            "projectName": "bestioles"
+        }
+    ]
+}
