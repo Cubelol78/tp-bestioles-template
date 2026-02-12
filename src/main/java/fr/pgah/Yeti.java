@@ -4,22 +4,27 @@ import java.awt.Color;
 
 public class Yeti extends Bestiole {
 
+  private int nbMouvements;
+
   public Action getAction(BestioleInfo info) {
+    nbMouvements++;
     if (info.getEnFace() == Voisin.AUTRE) {
-      return Action.INFECTER;  // Infecte s'il y a une autre bestiole en face
+      return Action.INFECTER;
     } else if (info.getEnFace() == Voisin.RIEN) {
-      return Action.SAUTER;  // Avance si la case devant est libre
+      return Action.SAUTER;
     } else {
-      return Action.DROITE;  // Tourne sinon (mur ou même espèce)
+      return Action.DROITE;
     }
   }
 
   public Color getCouleur() {
-    return Color.WHITE;  // Le Yeti est blanc
+    return Color.WHITE; 
   }
 
   public String toString() {
-    return "Y";
+    String[] lettres = {"Y", "E", "T", "I"};
+    int index = (nbMouvements / 6) % 4;
+    return lettres[index];
   }
     
 }
