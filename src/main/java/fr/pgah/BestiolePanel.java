@@ -39,6 +39,14 @@ public class BestiolePanel extends JPanel {
       // Dessine une case remplie de la couleur de la bestiole
       g.setColor(myModel.getColor(next));
       g.fillRect(p.x * FONT_SIZE + 11, p.y * FONT_SIZE + 11, FONT_SIZE - 1, FONT_SIZE - 1);
+
+      // En mode debug, affiche la flèche de direction par-dessus
+      String appearance = myModel.getAppearance(next);
+      if (!appearance.equals(myModel.getString(next))) {
+        g.setColor(Color.WHITE);
+        g.setFont(myFont);
+        g.drawString(appearance, p.x * FONT_SIZE + 11, p.y * FONT_SIZE + FONT_SIZE + 9);
+      }
     }
   }
 }
