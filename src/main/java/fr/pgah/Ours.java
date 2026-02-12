@@ -23,7 +23,7 @@ public class Ours extends Bestiole {
 
   public Color getCouleur() {
     if (polaire) {
-      return Color.GRAY;
+      return Color.WHITE;
     } else {
       return new Color(165, 42, 42);
     }

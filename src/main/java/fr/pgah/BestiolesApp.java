@@ -15,7 +15,7 @@ public class BestiolesApp {
     frame.add(30, Ours.class);
     frame.add(30, Tigre.class);
     frame.add(30, TigreBlanc.class);
-    // frame.add(30, Yeti.class);
+    frame.add(30, Yeti.class);
     // frame.add(30, ChatNinja.class);
 
     // Démarre la simulation
