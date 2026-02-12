@@ -10,13 +10,13 @@ public class BestiolesApp {
     BestioleFrame frame = new BestioleFrame(60, 40);
 
     // Dé-commentez les lignes au fur et à mesure que les classes sont implémentées
-    frame.add(30, Plancton.class);
-    frame.add(30, Crocodile.class);
-    frame.add(30, Ours.class);
-    frame.add(30, Tigre.class);
-    frame.add(30, TigreBlanc.class);
-    frame.add(30, Yeti.class);
-    // frame.add(30, ChatNinja.class);
+    frame.add(50, Plancton.class);
+    frame.add(50, Crocodile.class);
+    frame.add(50, Ours.class);
+    frame.add(50, Tigre.class);
+    frame.add(50, TigreBlanc.class);
+    frame.add(50, Yeti.class);
+    frame.add(5, ChatNinja.class);
 
     // Démarre la simulation
     frame.start();
